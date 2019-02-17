@@ -172,16 +172,32 @@
 
 //测试异步读取文件
 
-var readMeOne = fs.readFile("readMe.txt", "utf8", function(err, data) {
-    var waitTill = new Date(new Date().getTime() + 2 * 1000);
-    while (waitTill > new Date()) {}
-    console.log("first async");
-});
+// var readMeOne = fs.readFile("readMe.txt", "utf8", function(err, data) {
+//     var waitTill = new Date(new Date().getTime() + 2 * 1000);
+//     while (waitTill > new Date()) {}
+//     console.log("first async");
+// });
 
-var readMeTwo = fs.readFile("readMe.txt", "utf8", function(err, data) {
-    var waitTill = new Date(new Date().getTime() + 2 * 1000);
-    while (waitTill > new Date()) {}
-    console.log("second async");
-});
+// var readMeTwo = fs.readFile("readMe.txt", "utf8", function(err, data) {
+//     var waitTill = new Date(new Date().getTime() + 2 * 1000);
+//     while (waitTill > new Date()) {}
+//     console.log("second async");
+// });
 
-console.log("finished");
+// console.log("finished");
+
+//创建和删除目录
+// fs.unlink("writeMe.txt", function() { //删除 writeMe.txt文件
+//     console.log("delete writeMe.txt file");
+// });
+
+// fs.mkdirSync('stuff'); //创建目录
+// fs.rmdirSync('stuff'); //删除目录
+
+fs.mkdir('stuff', function() {  // 创建目录
+    fs.readFile('readMe.txt', 'utf8', function (err, data) {    //读取文件
+        fs.writeFile('./stuff/writeMe.txt', data, function() {  //创建 writeMe.txt在 stuff目录下
+            console.log('copy successfully')
+        })
+    })
+})
