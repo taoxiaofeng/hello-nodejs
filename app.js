@@ -194,10 +194,26 @@
 // fs.mkdirSync('stuff'); //创建目录
 // fs.rmdirSync('stuff'); //删除目录
 
-fs.mkdir('stuff', function() {  // 创建目录
-    fs.readFile('readMe.txt', 'utf8', function (err, data) {    //读取文件
-        fs.writeFile('./stuff/writeMe.txt', data, function() {  //创建 writeMe.txt在 stuff目录下
-            console.log('copy successfully')
-        })
-    })
-})
+// fs.mkdir('stuff', function() {  // 创建目录
+//     fs.readFile('readMe.txt', 'utf8', function (err, data) {    //读取文件
+//         fs.writeFile('./stuff/writeMe.txt', data, function() {  //创建 writeMe.txt在 stuff目录下
+//             console.log('copy successfully')
+//         })
+//     })
+// })
+
+var myReadStrem = fs.createReadStream(__dirname + "/readMe.txt"); //读取一个流 文件
+var myWriteStream = fs.createWriteStream(__dirname + "/writeMe.txt");
+myReadStrem.setEncoding('utf8'); //字符编码
+var data = "";
+
+myReadStrem.on('data', function(chunk) {
+    myWriteStream.write(chunk);
+    // data += chunk;
+    // console.log('new chunk received');
+    // console.log(chunk);
+});
+
+myReadStrem.on('end', function() {
+    console.log(data);
+});
