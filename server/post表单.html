@@ -9,9 +9,10 @@
 </head>
 
 <body>
-    <form action="http://localhost:1111/aaa?a=55&b=66" method="post">
+    <form action="http://localhost:1111/upload" method="post" enctype="multipart/form-data">
         用户：<input type="text" name="user"><br>
         密码：<input type="text" name="pass"><br>
+        文件：<input type="file" name="f1">
         <input type="submit" value="提交">
     </form>
 </body>
