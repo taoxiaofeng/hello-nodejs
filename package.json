@@ -1,0 +1,23 @@
+{
+  "name": "hello-nodejs",
+  "version": "1.0.0",
+  "description": "[点击这里查看原文介绍](https://webapplog.com/you-dont-know-node/)",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taoxiaofeng/hello-nodejs.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taoxiaofeng/hello-nodejs/issues"
+  },
+  "homepage": "https://github.com/taoxiaofeng/hello-nodejs#readme",
+  "devDependencies": {
+    "uuid": "^3.3.3"
+  }
+}
