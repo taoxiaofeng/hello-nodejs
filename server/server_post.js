@@ -1,6 +1,7 @@
 const http = require('http');
 const common = require('../libs/common');
 const fs = require('fs');
+const uuid = require('uuid/v4')
 
 let server = http.createServer((req, res) => {
 
@@ -17,9 +18,9 @@ let server = http.createServer((req, res) => {
         // 解析二进制文件上传数据
         let post = {};
         let files = {};
-        if(req.headers['content-type']) {
+        if (req.headers['content-type']) {
             let str = req.headers['content-type'].split('; ')[1];
-            if(str) {
+            if (str) {
                 let boundary = '--' + str.split('=')[1];
 
 
@@ -39,13 +40,13 @@ let server = http.createServer((req, res) => {
                 //4、 每个数据在第一个 /r/n 处切成两半
                 arr.forEach(buffer => {
                     let n = buffer.indexOf('\r\n\r\n');
-                    let disposition = buffer.slice(0,n);
-                    let content = buffer.slice(n+4);
+                    let disposition = buffer.slice(0, n);
+                    let content = buffer.slice(n + 4);
 
 
                     disposition = disposition.toString();
                     // console.log(n, disposition, content);
-                    if(disposition.indexOf('\r\n') == -1) {
+                    if (disposition.indexOf('\r\n') == -1) {
                         // 普通数据
                         // 'Content-Disposition: form-data; name="user"'
                         // 'Content-Disposition: form-data; name="pass"'
@@ -63,14 +64,23 @@ let server = http.createServer((req, res) => {
                         let type = line2.split(': ')[1];
 
                         name = name.split('=')[1];
-                        name = name.substring(1, name.length-1);
+                        name = name.substring(1, name.length - 1);
 
                         filename = filename.split('=')[1];
-                        filename = filename.substring(1, filename.length-1);
+                        filename = filename.substring(1, filename.length - 1);
 
-                        console.log(name, filename, type, content);
+                        // console.log(name, filename, type, content);
 
-                        fs.writeFile('');
+                        let path = `../upload/${uuid().replace(/\-/g, '')}`;
+
+                        fs.writeFile(path, content, err => {
+                            if (err) {
+                                console.log('文件写入失败', err);
+                            } else {
+                                files[name] = { filename, path, type };
+                                console.log('成功', files);
+                            }
+                        });
                     }
                 });
 
