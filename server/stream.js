@@ -9,6 +9,10 @@ rs.on('error', error => {
     console.log('读取失败：', error)
 })
 
-rs.on('end', () => {
+rs.on('finish', () => {
     console.log('写入成功');
 })
+
+// rs.on('end', () => {
+//     console.log('写入成功');
+// })
